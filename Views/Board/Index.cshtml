@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Board Page";
+}
+<div class="d-flex flex-column nav_left p-3" style="width: 200px">
+    <!-- Vous pouvez ajouter des boutons ici lors de la création d'un board -->
+    <a class="btn btn-secondary newBoard" asp-area="" asp-controller="Board" asp-action="Create">+ New board</a>   
+    @if (ViewData.Model != null)
+    {
+        foreach (var board in ViewData.Model as List<Board>)
+        {
+            <div class="flex-between">
+                <a href="@Url.Action("SingleBoard", "Board", new { id = board.Id })" class="name-board">@board.Name.ToUpper()</a>
+                <a class="delete-board" data-id="@board.Id" style="cursor:pointer"><i class="bi bi-trash"></i></a>
+            </div>
+        }
+    }
+</div>
+<div class="text-center" >
+    <h1 class="display-4">My Boards</h1>
+    <img src="/Logo_Trellol_Ok.svg" class="logo_home" />
+</div>
+<!-- Modal de confirmation de suppression -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmation of deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="black">
+                Are you sure you want to remove this board?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelDeleteBtn">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteBtns = document.querySelectorAll('.delete-board');
+            var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            var cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+            deleteBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var boardId = btn.getAttribute('data-id');
+                    confirmDeleteBtn.setAttribute('data-board-id', boardId);
+                    $('#deleteModal').modal('show');
+                });
+            });
+
+            confirmDeleteBtn.addEventListener('click', function () {
+                var boardId = confirmDeleteBtn.getAttribute('data-board-id');
+                $.ajax({
+                    url: '/Board/Delete/' + boardId,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.success) {
+                            // Au lieu de recharger la page, supprime directement l'élément du DOM
+                            var deletedBoard = document.querySelector('.delete-board[data-id="' + boardId + '"]').closest('.flex-between');
+                            deletedBoard.parentNode.removeChild(deletedBoard);
+                        }
+                    }
+                });
+                $('#deleteModal').modal('hide');
+            });
+
+            cancelDeleteBtn.addEventListener('click', function () {
+                // Cacher la modal sans effectuer la suppression
+                $('#deleteModal').modal('hide');
+            });
+        });
+    </script>
+}
+
+
+

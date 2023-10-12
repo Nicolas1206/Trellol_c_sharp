@@ -1,0 +1,117 @@
+﻿@model Trellol.Models.Board
+@using Trellol.Util
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<div class="second-nav p-3" data-bs-theme="light">
+    <h1 class="p-3">@Model.Name.FirstCharToUpper()</h1>
+
+</div>
+<div class="container_list p-3">
+    @foreach (var list in Model.Lists)
+    {
+        <section class="list" id="list_@list.Id" draggable="true">
+            <div class="toplist">
+                <h6>@list.Name.ToUpper()</h6>
+                <a onclick="deleteList(@list.Id)"><i class="bi bi-x-lg" style="color:black; font-weight:bold"></i></a>
+            </div>            
+            
+            <input type="text" class="form-control form-control-sm" placeholder="Add Card" id="cardName_@list.Id" name="cardName" required />
+            <a class="btn-add" type="button" onclick="addCard(@list.Id)">+</a>
+            <div class="cards">
+                @foreach (var card in list.Cards)
+                {
+                    <section class="party_card card" id="card_@card.Id" draggable="true">
+
+                        <div class="container_cardname">
+                            <h6 class="name_card">@card.Name.FirstCharToUpper()</h6>
+                            <a onclick="deleteCard(@card.Id)"><i class="bi bi-trash3" style="color:black"></i></a>
+                        </div>
+
+                        <div class="container_icons_card">
+                            @if (card.Description != "")
+                            {
+                                <p class="displayDesc">
+                                    @card.Description
+                                </p>
+                            }
+                            <a id="toggleDescriptionBtn" onclick="toggleDescription(@card.Id)"><i class="bi bi-caret-down"></i></a>
+                        </div>
+                        <section class="desc">
+                            <div class="container_saisie">
+                                <textarea id="description_@card.Id" name="description" class="saisie form-control p-0" placeholder="Add your description.."></textarea>
+                            </div>
+                            <div class="container_add">
+                                <a class="btn btn-outline-light btn-sm" id="addButton_@(card.Id)" onclick="addDescriptionCard(@card.Id)">Add</a>
+                            </div>
+                        </section>
+                    </section>
+                }
+            </div> <!-- This closing div tag was missing -->
+        </section>
+    }
+    <section class="container_form">
+        <form id="addListForm">
+            <input class="form-control-sm form-control" type="text" placeholder="Add List" id="listName" name="listName" required>
+
+            <a class="btn-add" type="button" placeholder="Add List" onclick="addList()">+</a>
+        </form>
+    </section>
+</div>
+<script>
+    function addList() {
+        var listName = $("#listName").val();
+        var boardId = @Model.Id;
+
+        $.post('@Url.Action("AddList", "Board")', { boardId: boardId, listName: listName }, function (result) {
+            if (result.success) {
+                // Met à jour la page après l'ajout réussi
+                location.reload();
+            }
+        });
+    }
+    function addCard(listId) {
+        var cardName = $("#cardName_" + listId).val();
+        var boardId = @Model.Id;
+
+        $.post('@Url.Action("AddCard", "Board")', { listId: listId, cardName: cardName }, function (result) {
+            if (result.success) {
+                location.reload();
+            }
+        });
+    }
+    function deleteList(listId) {
+        if (confirm("Are you sure you want to delete this list?")) {
+            $.post('@Url.Action("DeleteList", "Board")', { id: listId }, function (result) {
+                if (result.success) {
+                    location.reload();
+                }
+            });
+        }
+    }
+    function deleteCard(cardId) {
+        if (confirm("Are you sure you want to delete this card?")) {
+            $.post('@Url.Action("DeleteCard", "Board")', { id: cardId }, function (result) {
+                if (result.success) {
+                    location.reload();
+                }
+            });
+        }
+    }
+    function addDescriptionCard(cardId) {
+        var description = $("#description_" + cardId).val();
+
+        $.post('@Url.Action("EditCardDescription", "Board")', { cardId: cardId, description: description }, function (result) {
+            if (result.success) {
+                location.reload();
+            }
+        });
+    }
+    function toggleDescription(cardId) {
+        var description = $("#description_" + cardId);
+        var addButton = $("#addButton_" + cardId);
+
+        description.slideToggle(function () {
+            addButton.toggle(description.is(":visible"));
+        });
+    }
+</script>

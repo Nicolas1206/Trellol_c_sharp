@@ -1,0 +1,211 @@
+html {
+
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+nav, .second-nav, .nav_left {
+    background-color: #eaebff;
+}
+nav {
+    box-shadow: 5px 5px 10px rgba(55, 94, 148, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.4);
+}
+.logo_trellol{
+    width: 50px;
+    margin-right: 20px;
+}
+.logo_home{
+    width:15%;
+}
+
+i:hover {
+    cursor: pointer;
+    color: black;
+
+}
+.btn {
+    background-color: #edeeff;
+    border: solid 1px black;
+    color: black;
+}
+    .btn:hover {
+        transform: scale(1.1);
+        background: linear-gradient(-45deg, #ffd19c, #fee4ff, #cdffff, #eaffcb);
+        border: solid 0.5px black;
+        color: black;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus, label:focus {
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.15rem black;
+        background-color:#edeeff;
+    }
+.form-control {
+    background-color: #ffffff00;
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    animation: gradientAnimation 8s infinite alternate;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position-y: 0%;
+    }
+
+    100% {
+        background-position-y: 100%;
+    }
+}
+
+.flex-between{
+    display: flex;
+    margin-top: 20px;
+    position: relative;
+}
+.name-board{
+    width: 85%;
+    word-break: break-word;
+    padding-left:10px;
+    font-size: 0.8rem;
+}
+.bi-trash{
+   position: relative;
+   right: 0px;
+   font-size:1.2rem;
+}
+
+
+.second-nav {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    box-shadow: 0 7px 20px rgba(55, 94, 148, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.4);
+    position: relative;
+    z-index: 2;
+}
+
+.nav_left {
+    border-end-end-radius: 5px;
+    box-shadow: 5px 5px 10px rgba(55, 94, 148, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.4);
+    position: relative;
+    z-index: 4;
+}
+
+.bi-plus-square-fill{
+    font-size:1.5rem;
+}
+
+.btn-add {
+    width: 100%;
+    text-align: center;
+    box-shadow: 5px 5px 5px #1c1e5321;
+    border-radius: 3px;
+    border: solid 1px black;
+    font-weight: bold;
+    margin-top: 10px;
+}
+    .btn-add:hover {
+        background: linear-gradient(-45deg,#ffe7cc, #feefff, #e0f1ff, #f5ffe7);
+        transform: scale(1);
+        border: solid 0.5px black;
+        color: black;
+        transition: 0.3s ease-in-out;
+    }
+.plus{
+    font-size: 2.5rem;
+}
+.container_list {
+    display: flex;
+    gap: 20px;
+}
+.container_form {
+    width: 210px;
+    height: fit-content;
+    padding: 10px;
+    background-color: #f8f8ff61;
+    box-shadow: 5px 5px 5px #1c1e5321;
+    border-radius: 3px;
+}
+.list {
+    width: 210px;
+    height: fit-content;
+    padding: 10px;
+    background-color: #edeeff;
+    box-shadow: 5px 5px 5px #1c1e5321;
+    border-radius: 3px;
+}
+.toplist {
+    display: flex;
+    justify-content: space-between;
+}
+.container_cardname{
+    display:flex;
+    justify-content: space-between;
+    min-height: 40px;
+}
+.party_card {
+    word-wrap: break-word;
+    padding: 9px;
+    margin-top: 15px;
+    background-color: #edeeff;
+    box-shadow: 3px 3px 3px #1c1e5321;
+    cursor: pointer;
+    color: black;
+    border: 0.5px solid black;
+}
+.party_card:hover {
+    background: linear-gradient(-45deg,#ffe7cc, #feefff, #e0f1ff, #f5ffe7);
+}
+
+.container_icons_card{
+    display:flex;
+    justify-content:space-between;
+    position: relative;
+
+}
+.name_card {
+    font-size: 0.8rem;
+}
+
+.container_saisie {
+    display: flex;
+    justify-content: center;
+}
+.saisie {
+    width: 400px;
+    height: fit-content;
+    font-size: 1rem;
+    resize: none; /* Empêche le redimensionnement */
+}
+.container_add{
+    margin-top: 15px;
+    display:flex;
+    justify-content: end;
+}
+.desc {
+    transition:1s;
+}
+#toggleDescriptionBtn{
+    position: absolute;
+    bottom: 0;
+    right:0;
+}
+.displayDesc {
+    width:85%;
+    color:#8689b7;
+}
+
+footer {
+    background-color: #ffffff00;
+}
+input {
+    background-color: #ffffff00;
+}
